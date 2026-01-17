@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: guesthouse-safety-api
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=True
+      - JWT_SECRET_KEY=your-super-secret-jwt-key-change-this
+      - SQLALCHEMY_DATABASE_URI=sqlite:///guesthouse.db
+    volumes:
+      # Mount the instance folder to persist database
+      - ./instance:/app/instance
+      # Mount code for hot-reload during development
+      - .:/app
+    restart: unless-stopped
